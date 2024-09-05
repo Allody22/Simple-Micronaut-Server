@@ -84,12 +84,3 @@ micronaut {
         replaceLogbackXml = true
     }
 }
-
-
-
-spotless {
-    kotlin {
-        licenseHeaderFile(file("LICENSEHEADER"))
-    }
-}
-
