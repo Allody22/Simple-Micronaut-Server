@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+
+  db:
+    image: postgres:13.7-alpine
+    container_name: micronaut-db
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+    environment:
+      - TZ=Asia/Novosibirsk
+      - POSTGRES_DB=micronaut-server-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  server:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: micronaut-server
+    ports:
+      - "9090:8080"
+    networks:
+      - mynetwork
+    depends_on:
+      - db
+    environment:
+      - TZ=Asia/Novosibirsk
+      - MICRONAUT_DATASOURCE_URL=jdbc:postgresql://db:5432/micronaut-server-db
+      - MICRONAUT_DATASOURCE_USERNAME=postgres
+      - MICRONAUT_DATASOURCE_PASSWORD=${PG_PASSWORD}
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  db-data:

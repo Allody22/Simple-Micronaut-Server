@@ -7,9 +7,9 @@ import java.time.LocalDate
 data class NewPurchaseRequest(
     val date: LocalDate = LocalDate.now(),
 
-    val productName: String?,
+    val productName: String = "unknown",
 
-    val price: Double?,
+    val price: Double = 0.0,
 
-    val category: String,
+    val category: String = "unknown",
 )

@@ -12,11 +12,13 @@ import ru.digital.org.repository.UserRepository
 @Singleton
 open class AuthService(private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder) {
 
-    // Подключаем логгер
     private val log: Logger = LoggerFactory.getLogger(AuthService::class.java)
 
+    /**
+     * Просто регистрируем юзера и сохраняем в бд
+     */
     @Transactional
-    open fun registerUser(username: String?, rawPassword: String?): String {
+    open fun registerUser(username: String, rawPassword: String): String {
         if (userRepository.existsByUsername(username)) {
             throw UsernameAlreadyExistsException(username)
         }
@@ -27,10 +29,15 @@ open class AuthService(private val userRepository: UserRepository, private val p
         return "User $username registered successfully."
     }
 
+    /**
+     * Проверяем правильные ли данные передал юзер для логина.
+     * Если что-то не так, то выкидываем экспешен без объяснений,
+     * чтобы никакой хакер не смог подобрать данные, то есть не сообщаем о том, что пользователь не зарегистрирован или тп.
+     */
     @Transactional
     open fun loginUser(username: String, password: String): Boolean {
         val userOpt = userRepository.findByUsername(username)
-        log.info("user trying to log in $userOpt")
+        log.info("user trying to login: $userOpt")
         if (userOpt.isPresent) {
             val user = userOpt.get()
             if (passwordEncoder.matches(password, user.password)) {

@@ -6,7 +6,7 @@ enum class ECategory {
     GASOLINE, CAFE, SERVICES, UNKNOWN_CATEGORY;
 
     companion object {
-        fun fromString(category: String): ECategory? {
+        fun fromString(category: String): ECategory {
             return try {
                 enumValueOf<ECategory>(category.uppercase(Locale.getDefault()))
             } catch (e: IllegalArgumentException) {

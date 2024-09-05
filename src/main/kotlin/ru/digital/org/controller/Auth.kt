@@ -9,6 +9,7 @@ import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import ru.digital.org.payload.request.LoginRequest
 import ru.digital.org.payload.request.RegistrationRequest
+import ru.digital.org.payload.response.PingResponse
 import ru.digital.org.service.AuthService
 
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -16,6 +17,12 @@ import ru.digital.org.service.AuthService
 class AuthController(
     private val authService: AuthService,
 ) {
+
+    @Post("/ping")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun ping(): PingResponse {
+        return PingResponse("Hello World!")
+    }
 
     @Post("/register")
     @Produces(MediaType.APPLICATION_JSON)

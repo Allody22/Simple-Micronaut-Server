@@ -21,7 +21,7 @@ data class GasStationPurchase(
 
     var price: Double? = 0.0,
 
-    var eCategory: ECategory ? = ECategory.UNKNOWN_CATEGORY,
+    var eCategory: ECategory?,
 
     var date: LocalDate = LocalDate.now(),
 

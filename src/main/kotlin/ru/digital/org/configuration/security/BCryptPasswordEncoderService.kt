@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Singleton
-class BCryptPasswordEncoderService: PasswordEncoder {
+class BCryptPasswordEncoderService : PasswordEncoder {
 
     private val delegate: PasswordEncoder = BCryptPasswordEncoder()
 
@@ -17,6 +17,4 @@ class BCryptPasswordEncoderService: PasswordEncoder {
     override fun matches(rawPassword: CharSequence?, encodedPassword: String?): Boolean {
         return delegate.matches(rawPassword, encodedPassword)
     }
-
-
 }

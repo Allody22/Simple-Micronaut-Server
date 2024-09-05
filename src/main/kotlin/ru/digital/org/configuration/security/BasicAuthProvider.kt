@@ -38,6 +38,6 @@ class AppAuthenticationProvider @Inject constructor(
             }
         }
 
-        return AuthenticationResponse.failure()
+        return AuthenticationResponse.failure("Wrong information, try another data")
     }
 }

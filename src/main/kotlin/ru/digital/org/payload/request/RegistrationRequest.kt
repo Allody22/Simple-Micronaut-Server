@@ -5,7 +5,7 @@ import io.micronaut.serde.annotation.Serdeable
 @Serdeable
 data class RegistrationRequest(
 
-    val name: String?,
+    val name: String = "",
 
-    val password: String?
+    val password: String = ""
 )
