@@ -5,13 +5,12 @@ import ru.digital.org.model.GasStationPurchase
 import ru.digital.org.model.constants.ECategory
 import ru.digital.org.model.exception.UserNotFoundException
 import ru.digital.org.payload.request.NewPurchaseRequest
-import ru.digital.org.repository.CategoryRepository
 import ru.digital.org.repository.GasStationPurchaseRepository
 import ru.digital.org.repository.UserRepository
 
 @Singleton
 class GasStationService(private val gasStationPurchaseRepository: GasStationPurchaseRepository,
-    private val userRepository: UserRepository, private val categoryRepository: CategoryRepository
+    private val userRepository: UserRepository
 ) {
 
     fun saveNewPurchase(newPurchaseRequest: NewPurchaseRequest, userName: String){

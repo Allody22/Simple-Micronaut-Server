@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: micronaut-server
     ports:
-      - "9090:8080"
+      - "8080:8080"
     networks:
       - mynetwork
     depends_on:

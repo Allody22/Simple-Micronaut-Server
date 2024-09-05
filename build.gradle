@@ -8,8 +8,16 @@ plugins {
     id("io.micronaut.aot") version "4.4.2"
 }
 
+
+shadowJar {
+    archiveBaseName.set("globalexception")
+    archiveVersion.set("0.1")
+    archiveClassifier.set("all-optimized")
+}
+
+
 version = "0.1"
-group = "example.micronaut"
+group = ".micronaut"
 
 repositories {
     mavenCentral()
@@ -55,7 +63,7 @@ dependencies {
 
 
 application {
-    mainClass = "example.micronaut.ApplicationKt"
+    mainClass = "ru.digital.org.ApplicationKt"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")

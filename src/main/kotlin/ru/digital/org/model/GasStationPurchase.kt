@@ -4,6 +4,8 @@ package ru.digital.org.model
 import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
+import io.micronaut.data.annotation.MappedProperty
+import io.micronaut.data.model.DataType
 import io.micronaut.serde.annotation.Serdeable
 import ru.digital.org.model.constants.ECategory
 import java.time.LocalDate
@@ -21,7 +23,8 @@ data class GasStationPurchase(
 
     var price: Double? = 0.0,
 
-    var eCategory: ECategory?,
+    @MappedProperty(type = DataType.STRING)
+    var eCategory: ECategory = ECategory.UNKNOWN_CATEGORY,
 
     var date: LocalDate = LocalDate.now(),
 
