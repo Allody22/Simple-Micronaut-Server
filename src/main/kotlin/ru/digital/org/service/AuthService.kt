@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
 import ru.digital.org.model.User
+import ru.digital.org.model.exception.UsernameAlreadyExistsException
 import ru.digital.org.repository.UserRepository
 
 @Singleton
@@ -15,16 +16,15 @@ open class AuthService(private val userRepository: UserRepository, private val p
     private val log: Logger = LoggerFactory.getLogger(AuthService::class.java)
 
     @Transactional
-    open fun registerUser(username: String?, rawPassword: String?): User {
+    open fun registerUser(username: String?, rawPassword: String?): String {
         if (userRepository.existsByUsername(username)) {
-            //TODO бросаем экспешен
-            return userRepository.findByUsername(username).get()
+            throw UsernameAlreadyExistsException(username)
         }
         val hashedPassword = passwordEncoder.encode(rawPassword)
 
         val user = User(null, username, hashedPassword)
-        log.info("new user $user")
-        return userRepository.save(user)
+        userRepository.save(user)
+        return "User $username registered successfully."
     }
 
     @Transactional
@@ -38,7 +38,6 @@ open class AuthService(private val userRepository: UserRepository, private val p
             }
         }
 
-        // Если аутентификация не удалась, возвращаем null
         return false
     }
 }

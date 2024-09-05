@@ -20,8 +20,7 @@ class AuthController(
     @Post("/register")
     @Produces(MediaType.APPLICATION_JSON)
     fun registerUser(@Body registrationRequest: RegistrationRequest): String {
-        authService.registerUser(registrationRequest.name, registrationRequest.password)
-        return "success"
+        return authService.registerUser(registrationRequest.name, registrationRequest.password)
     }
 
     @Post("/login")

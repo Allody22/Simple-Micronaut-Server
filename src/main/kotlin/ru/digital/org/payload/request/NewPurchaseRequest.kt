@@ -12,6 +12,4 @@ data class NewPurchaseRequest(
     val price: Double?,
 
     val category: String,
-
-    val userName: String?,
 )

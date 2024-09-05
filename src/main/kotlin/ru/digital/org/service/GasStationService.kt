@@ -3,6 +3,7 @@ package ru.digital.org.service
 import jakarta.inject.Singleton
 import ru.digital.org.model.GasStationPurchase
 import ru.digital.org.model.constants.ECategory
+import ru.digital.org.model.exception.UserNotFoundException
 import ru.digital.org.payload.request.NewPurchaseRequest
 import ru.digital.org.repository.GasStationPurchaseRepository
 import ru.digital.org.repository.UserRepository
@@ -12,13 +13,12 @@ class GasStationService(private val gasStationPurchaseRepository: GasStationPurc
     private val userRepository: UserRepository
 ) {
 
-    fun saveNewPurchase(newPurchaseRequest: NewPurchaseRequest){
+    fun saveNewPurchase(newPurchaseRequest: NewPurchaseRequest, userName: String){
         val eCategory = ECategory.fromString(newPurchaseRequest.category)
-        val user = userRepository.findByUsername(newPurchaseRequest.userName)
+        val user = userRepository.findByUsername(userName)
 
         if (!user.isPresent){
-            //Какой-то свой эксепшен
-            throw IllegalArgumentException("Username ${newPurchaseRequest.userName} not found")
+            throw UserNotFoundException(userName)
         }
         val purchase = GasStationPurchase(null, newPurchaseRequest.productName, newPurchaseRequest.price,
             eCategory, newPurchaseRequest.date, user.get().id)
