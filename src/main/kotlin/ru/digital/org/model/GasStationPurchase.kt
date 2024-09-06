@@ -5,10 +5,9 @@ import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.data.annotation.MappedProperty
-import io.micronaut.data.model.DataType
 import io.micronaut.serde.annotation.Serdeable
 import ru.digital.org.model.constants.ECategory
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 //Любая покупка на заправке, то есть и топливо и бутеры и тп
 @MappedEntity(value = "gas_station_purchase")
@@ -23,10 +22,10 @@ data class GasStationPurchase(
 
     var price: Double? = 0.0,
 
-    @MappedProperty(type = DataType.STRING)
+    @MappedProperty
     var eCategory: ECategory = ECategory.UNKNOWN_CATEGORY,
 
-    var date: LocalDate = LocalDate.now(),
+    var date: LocalDateTime = LocalDateTime.now(),
 
-    val user: Long?
+    val userId: Long?
 )

@@ -15,6 +15,7 @@ services:
       - POSTGRES_PASSWORD=${PG_PASSWORD}
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   server:
     env_file: .env
@@ -28,6 +29,7 @@ services:
       - mynetwork
     depends_on:
       - db
+    restart: on-failure
     environment:
       - TZ=Asia/Novosibirsk
       - MICRONAUT_DATASOURCE_URL=jdbc:postgresql://db:5432/micronaut-server-db

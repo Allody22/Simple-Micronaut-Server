@@ -5,14 +5,14 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import jakarta.inject.Singleton
-import ru.digital.org.model.exception.UsernameAlreadyExistsException
+import ru.digital.org.model.exception.InvalidCategoryException
 
 @Singleton
-class UsernameAlreadyExistsExceptionHandler : ExceptionHandler<UsernameAlreadyExistsException, HttpResponse<*>> {
+class InvalidCategoryExceptionHandler : ExceptionHandler<InvalidCategoryException, HttpResponse<*>> {
 
-    override fun handle(request: HttpRequest<*>, exception: UsernameAlreadyExistsException): HttpResponse<*> {
+    override fun handle(request: HttpRequest<*>, exception: InvalidCategoryException): HttpResponse<*> {
         return HttpResponse
-            .status<Any>(HttpStatus.CONFLICT)
+            .status<Any>(HttpStatus.UNPROCESSABLE_ENTITY)
             .body(mapOf("error" to exception.message))
     }
 }

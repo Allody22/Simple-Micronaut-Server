@@ -1,5 +1,7 @@
 package ru.digital.org.controller
 
+import io.micronaut.data.model.Page
+import io.micronaut.data.model.Pageable
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
@@ -23,13 +25,19 @@ class PurchaseController (private val gasStationService: GasStationService) {
         return "Заказ успешно сохранён"
     }
 
+    @Get("/get/pageable")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun getUserPurchasePage(authentication: Authentication, pageable: Pageable): Page<GasStationPurchase> {
+        val username = authentication.name
+        return gasStationService.getUserPurchaseAsPage(username, pageable)
+    }
 
     @Get("/get/page/{limit}/{offset}")
     @Produces(MediaType.APPLICATION_JSON)
     fun getUserPurchasePageable(authentication: Authentication,@PathVariable limit: Int, @PathVariable offset:Int): List<GasStationPurchase> {
         val username = authentication.name
 
-        val userPurchase = gasStationService.getUserPurchasePageable(limit, offset ,username);
+        val userPurchase = gasStationService.getUserPurchasePageable(limit, offset ,username)
         return userPurchase
     }
 
